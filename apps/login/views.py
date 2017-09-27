@@ -36,6 +36,8 @@ def process(request):
     pass #might be good to return someone to hell in this case
 
 def dashboard(request):
+
+    return redirect(reverse('dashboard:dashboard'))
     if not 'login_id' in request.session:
         # in the future I could send someone to hell here
         return redirect(reverse('landing'))
@@ -52,5 +54,5 @@ def dashboard(request):
 
 def logout(request):
     print 'entered logout'
-    del request.session['user_id']
+    del request.session['login_id']
     return redirect(reverse('login:landing'))

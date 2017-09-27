@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Travel Site Home</title>
+  </head>
+  <body>
+    <div id="top">
+      <a href="{% url 'login:logout' %}">Logout</a>
+    </div>
+    <h1>Hello, {{user.name}}!</h1>
+
+
+
+
+
+    <div id="user_trips">
+      <h3>Your Trip Schedules:</h3>
+      <table>
+        <tr>
+          <th>Destination</th>
+          <th>Travel Start Date</th>
+          <th>Travel End Date</th>
+          <th>Plan</th>
+        </tr>
+        {% for trip in user.trips %}
+          <tr>
+            <td><a href="{% url 'dashboard:destination' trip_id=trip.id %}">{{trip.destination}}</a></td>
+            <td>{{trip.date_from}}</td>
+            <td>{{trip.date_to}}</td>
+            <td>{{trip.description}}</td>
+          </tr>
+        {% endfor %}
+      </table>
+      {% if not trips in user %}
+        <p>Looks like you don't have any trips planned. You can <a href="{% url 'dashboard:add_travel' %}">add a travel plan</a> or join one of the plans below.</p>
+      {% endif %}
+    </div>
+
+
+
+    <div id="other_trips">
+      <h3>Other User's Travel Plans:</h3>
+      <table>
+        <tr>
+          <th>Name</th>
+          <th>Destination</th>
+          <th>Travel Start Date</th>
+          <th>Travel End Date</th>
+          <th>Do you want to join?</th>
+        </tr>
+        {% for trip in others.trips %}
+          <tr>
+            <td>{{trip.user.name}}</td>
+            <td><a href="{% url 'dashboard:destination' trip_id=trip.id %}">{{trip.destination}}</a></td>
+            <td>{{trip.date_from}}</td>
+            <td>{{trip.date_to}}</td>
+            <td><a href="{% url 'dashboard:join_trip' trip_id=trip.id %}">Join</a></td>
+          </tr>
+        {% endfor %}
+      </table>
+    </div>
+
+
+    <div id="lower">
+      <a href="{% url 'dashboard:add_travel' %}">Add Travel Plan</a>
+    </div>
+
+  </body>
+</html>

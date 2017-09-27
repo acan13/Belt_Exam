@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Add a trip</title>
+  </head>
+  <body>
+    <div id="top">
+      <a href="{% url 'dashboard:dashboard' %}">Home</a>
+      <a href="{% url 'login:logout' %}">Logout</a>
+    </div>
+
+    <h1>Add a Trip!</h1>
+
+    <form class="" action="{% url 'dashboard:process_add_travel'%}" method="post">
+      {% csrf_token %}
+      <label for="destination">Destination: </label>
+      <input type="text" name="destination" value="">
+      <label for="description">Description: </label>
+      <input type="text" name="description" value="">
+      <label for="date_from">Travel Date From: </label>
+      <input type="date" name="date_from" value="">
+      <label for="date_to">Travel Date To: </label>
+      <input type="date" name="date_to" value="">
+      <input type="submit" name="submit" value="Add">
+    </form>
+
+    {% if messages %}
+      <ul>
+        {% for message in messages %}
+          <li>{{message}}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </body>
+</html>

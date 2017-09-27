@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Show Trip</title>
+  </head>
+  <body>
+    <div id="top">
+      <a href="{% url 'dashboard:dashboard' %}">Home</a>
+      <a href="{% url 'login:logout' %}">Logout</a>
+    </div>
+
+    <h2>Trip to: {{trip.destination}}</h2>
+    <ul>
+      <li>Planned by: {{trip.organizer.name}}</li>
+      <li>Description: {{trip.description}}</li>
+      <li>Travel Date From: {{trip.date_from}}</li>
+      <li>Travel Date To: {{trip.date_to}}</li>
+    </ul>
+
+    <h3>Other users joining the trip:</h3>
+    <ul>
+      {% for user in trip.users %}
+        <li>{{user.name}}</li>
+      {% endfor %}
+    </ul>
+
+    <!-- add a join trip button if I have time -->
+  </body>
+</html>
