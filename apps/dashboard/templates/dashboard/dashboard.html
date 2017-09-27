@@ -32,7 +32,7 @@
           </tr>
         {% endfor %}
       </table>
-      {% if not trips in user %}
+      {% if not user.trips %}
         <p>Looks like you don't have any trips planned. You can <a href="{% url 'dashboard:add_travel' %}">add a travel plan</a> or join one of the plans below.</p>
       {% endif %}
     </div>

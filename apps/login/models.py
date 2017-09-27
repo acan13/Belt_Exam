@@ -1,6 +1,9 @@
 from __future__ import unicode_literals
 import re, bcrypt
 from django.db import models
+from datetime import datetime, date
+
+
 
 
 # email regex for use later on
@@ -17,8 +20,8 @@ class UserManager(models.Manager):
         if form_data['name'] == '':
             errors.append('Name is required.')
         else:
-            if len(form_data['name'])<2:
-                errors.append('Name must have at least 2 characters.')
+            if len(form_data['name'])<3:
+                errors.append('Name must have at least 3 characters.')
             if not str.isalpha(str(form_data['name'].replace(' ',''))): #removes spaces when checking for non letters
                 errors.append('Name may not contain numbers or symbols.')
                 # add something to check if name is too long
@@ -27,6 +30,9 @@ class UserManager(models.Manager):
         # now check username
         if form_data['username'] == '':
             errors.append('Username is required.')
+        else:
+            if len(form_data['username'])<3:
+                errors.append('Username must have at least 3 characters.')
         if len(self.filter(username=form_data['username']))>0:
             errors.append('This username is already associated with an account.')
 
@@ -127,10 +133,22 @@ class TripManager(models.Manager):
             if len(form_data['description'])<2:
                 errors.append('Description must have at least 2 characters.')
 
+
         # check date_from
+        if form_data['date_from'] == 'invalid':
+            errors.append('Please enter a start date.')
+        elif form_data['date_from'] < date.today():
+            errors.append('Please enter a start date in the future.')
 
 
         # check date_to
+        if form_data['date_to'] == 'invalid':
+            errors.append('Please enter an end date.')
+        else:
+            if form_data['date_to'] < date.today():
+                errors.append('Please enter an end date in the future.')
+            if form_data['date_to'] < form_data['date_from']:
+                errors.append('Please enter an end date that is after your start date.')
 
 
         # if there are errors, will return the errors to be displayed

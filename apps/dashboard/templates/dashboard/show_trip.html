@@ -10,6 +10,12 @@
       <a href="{% url 'login:logout' %}">Logout</a>
     </div>
 
+    {% if messages %}
+      {% for message in messages %}
+        <h3>{{message}}</h3>
+      {% endfor %}
+    {% endif %}
+
     <h2>Trip to: {{trip.destination}}</h2>
     <ul>
       <li>Planned by: {{trip.organizer.name}}</li>
