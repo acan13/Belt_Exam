@@ -17,7 +17,7 @@ def process(request):
             return redirect(reverse('login:landing'))
         if 'success' in errors:
             user = User.objects.register_user(request.POST)
-            request.session['user_id']=user.id
+            request.session['login_id']=user.id
             return redirect(reverse('dashboard:dashboard')) #this takes us to the dashboard app
 
     if 'login' in request.POST:
@@ -30,13 +30,13 @@ def process(request):
 
         if 'success' in errors:
             user_id = errors['success']
-            request.session['user_id']=user_id
+            request.session['login_id']=user_id
             return redirect(reverse('login:dashboard'))
 
     pass #might be good to return someone to hell in this case
 
 def dashboard(request):
-    if not 'user_id' in request.session:
+    if not 'login_id' in request.session:
         # in the future I could send someone to hell here
         return redirect(reverse('landing'))
     user_id = request.session['user_id']
